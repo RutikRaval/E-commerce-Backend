@@ -1,12 +1,15 @@
 const express = require("express")
-const { registerController } = require("../controller/AuthController")
-const { rateLimiter } = require("../middleware/RateLimiter")
 const {  validateSchema } = require("../middleware/Validate")
 const { registerSchema, loginSchema } = require("../auth/AuthValidation")
 const AuthController = require("../controller/AuthController")
-const router = express.Router()
-router.use(express.json())
-router.post('/register',rateLimiter,validateSchema(registerSchema), AuthController.registerController)
-router.post('/login',rateLimiter,validateSchema(loginSchema), AuthController.loginController)
+const { rateLimiter } = require("../middleware/RateLimiter")
 
-module.exports = router
+const authRouter = express.Router()
+
+authRouter.use(express.json())
+
+authRouter.post('/register',rateLimiter,validateSchema(registerSchema), AuthController.registerController)
+authRouter.post('/login',rateLimiter,validateSchema(loginSchema), AuthController.loginController)
+
+
+module.exports = authRouter

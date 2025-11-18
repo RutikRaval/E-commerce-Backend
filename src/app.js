@@ -4,11 +4,15 @@ require('./config/Config')
 const cors = require("cors");
 const authRoute=require('./routes/AuthRoutes')
 const bodyParser = require("body-parser");
+const categoryRouter = require('./routes/CategoryRoutes');
+const subCategoryRouter = require('./routes/SubCategoryRoutes');
+
 app.use(cors({origin:'*'}));
 app.use(express.json());
 app.use(bodyParser.json()); 
 
-console.log("before-ROUTER:>>>>")
 app.use('/auth',authRoute)
-console.log("AFTER-ROUTER:>>>>")
+app.use('/category',categoryRouter)
+app.use('/sub-category',subCategoryRouter)
+
 module.exports=app
