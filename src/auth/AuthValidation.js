@@ -33,5 +33,5 @@ exports.loginSchema = z.object({
             },
             { message: "Enter a valid email or 10-digit phone number" }
         ),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    password: z.string().min(1, "Password is required"),
 })
