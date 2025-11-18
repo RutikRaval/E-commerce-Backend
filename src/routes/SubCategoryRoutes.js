@@ -7,6 +7,7 @@ const SubCategoryValidation = require('../auth/SubCategoryValidation');
 const subCategoryRouter = express.Router()
 subCategoryRouter.use(express.json())
 
+subCategoryRouter.get('/', SubCategoryController.getAllSubCategoryController);
 
 
 subCategoryRouter.post('/',

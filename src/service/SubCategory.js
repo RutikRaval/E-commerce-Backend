@@ -3,12 +3,37 @@ const Category = require('../model/CategoryModel')
 
 class SubCategoryService {
 
+    getAllSubCategoryService = async (query = {}) => {
+        try {
+            
+            const { active } = query;
+            
+            let filter = {};
 
+            if (active !== undefined) {
+                filter.isActive = active === 'true';
+            }
+
+            const allSubCategory = await SubCategorySchema.find(filter).sort({ name: 1 });
+            return {
+                success: true,
+                status: 200,
+                message: "Sub Categories fetched successfully", 
+                data: allSubCategory,
+            };
+        } catch (error) {
+            return {
+                success: false,
+                status: 500,
+                message: error.message,
+            };
+        }
+    };
     addSubCategoryService = async (payload) => {
         try {
             const { categoryId, name } = payload;
             console.log(payload);
-            
+
             const category = await Category.findById(categoryId);
 
             if (!category) {
@@ -51,7 +76,7 @@ class SubCategoryService {
 
     deleteSubCategoryService = async (payload) => {
         try {
-            const { id } = payload; 
+            const { id } = payload;
 
             const subCategory = await SubCategorySchema.findById(id);
             if (!subCategory) {
