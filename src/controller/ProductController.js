@@ -1,17 +1,15 @@
-const Auth = require("../service/Auth");
+const ProductService = require("../service/ProductService");
 
-class AuthController {
-
-    registerController = async (req, res) => {
+class ProductController {
+    addProduct = async (req, res) => {
         try {
-            const result = await Auth.registerService(req.body);
+            const result = await ProductService.addProduct(req.body)
             return res.status(result.status).json({
                 success: result.success,
                 message: result.message,
                 user: result.data || null
             });
         } catch (error) {
-            console.error("Register error:", error);
             res.status(500).json({
                 success: false,
                 message: "Internal Server Error",
@@ -20,21 +18,14 @@ class AuthController {
         }
     }
 
-    loginController = async (req, res) => {
+    getAllProduct = async (req, res) => {
         try {
-            const result = await Auth.loginService(req.body)
-            res.cookie("token", result.token,
-                {
-                    httpOnly: true,
-                    sameSite: "strict",
-                    maxAge: 24 * 60 * 60 * 1000
-                }
-            )
+            const result=await ProductService.getAllProduct(req.query)
             return res.status(result.status).json({
                 success: result.success,
                 message: result.message,
-                user: result.user
-            })
+                product: result.data || null
+            });
         } catch (error) {
             res.status(500).json({
                 success: false,
@@ -45,4 +36,4 @@ class AuthController {
     }
 }
 
-module.exports = new AuthController()
+module.exports = new ProductController()
