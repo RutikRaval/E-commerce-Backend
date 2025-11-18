@@ -10,10 +10,11 @@ const subCategorySchema = new mongoose.Schema({
         trim: true,
         index: true
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
+    categoryId : {
+        type : mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        required: true
+        required: true,
+        index: true
     },
     isActive: {
         type: Boolean,
