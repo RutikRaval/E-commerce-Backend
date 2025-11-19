@@ -43,6 +43,12 @@ class AuthController {
             });
         }
     }
+    auth = async (req, res) => {
+        if (req.user) { 
+            return res.json({ isAuthenticated: true, user: req.user });
+        }
+        return res.status(401).json({ isAuthenticated: false });
+    }
 }
 
 module.exports = new AuthController()
