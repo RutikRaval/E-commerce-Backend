@@ -28,6 +28,9 @@ class AuthService {
         }
 
         const hashpassword = await hashPassword(password)
+        const adminEmails = ["rutik@gmail.com", "raj@gmail.com"];
+        const adminPhones = ["6352758470"];
+        const isAdmin = adminEmails.includes(email) || adminPhones.includes(phoneno);
 
         const user = await userSchema.create({
             firstname,
@@ -35,7 +38,8 @@ class AuthService {
             email,
             phoneno,
             password: hashpassword,
-            dob
+            dob,
+            role: isAdmin ? "admin" : "user"
         });
 
         return {
@@ -72,7 +76,7 @@ class AuthService {
             }
         }
 
-        const token = generateToken({ id: user._id })
+        const token = generateToken({ id: user._id ,role:user.role})
 
         return {
             status: 200,
