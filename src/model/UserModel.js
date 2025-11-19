@@ -13,17 +13,17 @@ const userSchema = new mongoose.Schema(
         email: {
             type: String,
             required: true,
-            lowercase:true,
-            unique:true,
-            trim:true,
-            index:true
+            lowercase: true,
+            unique: true,
+            trim: true,
+            index: true
         },
         phoneno: {
             type: String,
             required: true,
-            unique:true,
-            trim:true,
-            index:true
+            unique: true,
+            trim: true,
+            index: true
         },
         password: {
             type: String,
@@ -33,7 +33,12 @@ const userSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user"
+        },
     }, { timestamps: true }
 )
 
-module.exports = mongoose.model('User',userSchema)
+module.exports = mongoose.model('User', userSchema)
