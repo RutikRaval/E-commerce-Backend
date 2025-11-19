@@ -1,4 +1,20 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
+const imageSchema = new mongoose.Schema({
+    url: { type: String, required: true },
+    alt: { type: String, required: true },
+}, { _id: false });
+
+const colorImageSchema = new mongoose.Schema({
+    color: { type: String, required: true },
+    images: [imageSchema]
+}, { _id: false });
+
+const variantSchema = new mongoose.Schema({
+    color: { type: String, required: true },
+    size: { type: String },
+    stock: { type: Number, default: 0 },
+}, { _id: false });
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -7,8 +23,7 @@ const productSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
         unique: true,
-        trim: true,
-        index: true
+        index: true,
     },
     description: {
         type: String,
@@ -19,58 +34,31 @@ const productSchema = new mongoose.Schema({
         ref: "Category",
         required: true,
     },
-
     subCategory: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "SubCategory",
         required: true,
     },
-    brand: {
-        type: String,
-        default: "",
-    },
 
-    price: {
-        type: Number,
-        required: true,
-    },
+    brand: { type: String, default: "" },
 
-    discountPrice: {
-        type: Number,
-        default: null, // Example: price - discount
-    },
-    isFeatured: {
-        type: Boolean,
-        default: false,
-    },
-    totalStock: {
-        type: Number,
-        default: 0,
-    },
-    variants: [
-        {
-            color: { type: String, required: true },
-            size: { type: String },
-            stock: { type: Number, default: 0 },
+    price: { type: Number, required: true },
 
-            // 👍 Images based on color
-            images: [
-                {
-                    url: { type: String, required: true },
-                    alt: { type: String, default: "" },
-                },
-            ],
-        },
-    ],
-    rating: {
-        type: Number,
-        default: 0,
-    },
+    discountPrice: { type: Number, default: null },
 
-    numReviews: {
-        type: Number,
-        default: 0,
-    },
-}, { timestamps: true })
+    isFeatured: { type: Boolean, default: false },
 
-module.exports = mongoose.model('Products', productSchema)
+    totalStock: { type: Number, default: 0 },
+
+    // No _id added here
+    colorImages: [colorImageSchema],
+
+    // No _id added here
+    variants: [variantSchema],
+
+    rating: { type: Number, default: 0 },
+    numReviews: { type: Number, default: 0 },
+
+}, { timestamps: true });
+
+module.exports = mongoose.model('Products', productSchema);

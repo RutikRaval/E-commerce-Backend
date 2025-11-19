@@ -11,5 +11,4 @@ router.use(express.json())
 router.post('/',rateLimiter,auth,validateSchema(productValidation),ProductController.addProduct)
 router.get('/',rateLimiter,auth,ProductController.getAllProduct)
 
-
 module.exports = router

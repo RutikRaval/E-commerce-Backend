@@ -1,5 +1,4 @@
 const express = require("express")
-const { rateLimiter } = require("../middleware/RateLimiter")
 const {  validateSchema } = require("../middleware/Validate")
 const { registerSchema, loginSchema } = require("../auth/AuthValidation")
 const AuthController = require("../controller/AuthController")
