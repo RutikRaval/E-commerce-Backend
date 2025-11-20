@@ -11,7 +11,7 @@ authRouter.use(express.json())
 
 authRouter.post('/register',rateLimiter,validateSchema(registerSchema), AuthController.registerController)
 authRouter.post('/login',rateLimiter,validateSchema(loginSchema), AuthController.loginController)
-authRouter.post('/check',rateLimiter,auth, AuthController.auth)
+authRouter.get('/check',rateLimiter,auth, AuthController.auth)
 
 
 module.exports = authRouter
