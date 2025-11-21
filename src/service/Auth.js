@@ -75,11 +75,9 @@ class AuthService {
                 message: "Invalid Password"
             }
         }
-        
-        console.log("++++++++++++++++++++++++++");
-        const token = generateToken({ id: user._id ,role:user.role})
-        console.log("-----------------------");
-        
+
+        const token = generateToken({ id: user._id, role: user.role })
+
         return {
             status: 200,
             success: true,

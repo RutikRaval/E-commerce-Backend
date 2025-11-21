@@ -50,6 +50,21 @@ class AuthController {
         }
         return res.status(401).json({ isAuthenticated: false });
     }
+
+    logoutController = async (req, res) => {
+        try {
+            res.clearCookie('token', {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None',
+                path: '/'
+            })
+
+            res.status(200).json({ success: true, message: 'Logged out' })
+        } catch (error) {
+            res.status(500).json({ error: 'Logout failed' });
+        }
+    }
 }
 
 module.exports = new AuthController()
