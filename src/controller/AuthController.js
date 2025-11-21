@@ -26,8 +26,8 @@ class AuthController {
 
             res.cookie("token", result.token, {
                 httpOnly: true,
-                secure: true,         // OK on http://localhost
-                sameSite: "None",       // ✅ default & safe for same-site (localhost counts!)
+                secure: false,         // OK on http://localhost
+                sameSite: "Lax",       // ✅ default & safe for same-site (localhost counts!)
                 path: '/',
                 maxAge: 24 * 60 * 60 * 1000
             });

@@ -97,7 +97,37 @@ class ProductService {
         if (id !== undefined) {
             filter._id = id
         }
-        const product = await productSchema.find(filter).sort({ name: 1 })
+        const product = await productSchema.find(filter).sort({ name: 1 }).populate([
+            {
+                path: 'category'
+            },
+            {
+                path: 'subCategory',
+                populate: {
+                    path: 'categoryId'
+                }
+            }
+        ])
+        return {
+            success: true,
+            status: 200,
+            message: "Products fetched successfully",
+            data: product
+        }
+    }
+
+    getLatestProduct = async () => {
+        const product = await productSchema.find().sort({ createdAt: -1 }).limit(5).populate([
+            {
+                path: 'category'
+            },
+            {
+                path: 'subCategory',
+                populate: {
+                    path: 'categoryId'
+                }
+            }
+        ])
         return {
             success: true,
             status: 200,

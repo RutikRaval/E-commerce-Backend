@@ -1,7 +1,7 @@
 const limit=require('express-rate-limit')
 exports.rateLimiter = limit({
   windowMs: 10 * 60 * 1000, // 10 minutes
-  max: 50,
+  max: 500,
   standardHeaders: true,    // Return rate limit info in RateLimit-* headers
   legacyHeaders: false,     // Disable X-RateLimit-* headers
   message: {

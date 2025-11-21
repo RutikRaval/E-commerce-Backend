@@ -10,5 +10,6 @@ router.use(express.json())
 
 router.post('/',rateLimiter,auth,validateSchema(productValidation),ProductController.addProduct)
 router.get('/',rateLimiter,auth,ProductController.getAllProduct)
+router.get('/latest',rateLimiter,auth,ProductController.getLatestProduct)
 
 module.exports = router
