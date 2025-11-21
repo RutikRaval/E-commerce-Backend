@@ -53,11 +53,11 @@ class AuthService {
 
     loginService = async (payload) => {
         const { identifier, password } = payload
-
+        
         const isEmail = /\S+@\S+\.\S+/.test(identifier);
 
         const user = await userSchema.findOne(isEmail ? { email: identifier } : { phoneno: identifier })
-
+        
         if (!user) {
             return {
                 success: false,
@@ -67,7 +67,7 @@ class AuthService {
         }
 
         const isMatchPassword = await comparePassword(password, user.password)
-
+        
         if (user && !isMatchPassword) {
             return {
                 success: false,
@@ -75,9 +75,11 @@ class AuthService {
                 message: "Invalid Password"
             }
         }
-
+        
+        console.log("++++++++++++++++++++++++++");
         const token = generateToken({ id: user._id ,role:user.role})
-
+        console.log("-----------------------");
+        
         return {
             status: 200,
             success: true,

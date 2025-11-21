@@ -23,13 +23,14 @@ class AuthController {
     loginController = async (req, res) => {
         try {
             const result = await Auth.loginService(req.body)
-            res.cookie("token", result.token,
-                {
-                    httpOnly: true,
-                    sameSite: "strict",
-                    maxAge: 24 * 60 * 60 * 1000
-                }
-            )
+
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: true,         // OK on http://localhost
+                sameSite: "None",       // ✅ default & safe for same-site (localhost counts!)
+                path: '/',
+                maxAge: 24 * 60 * 60 * 1000
+            });
             return res.status(result.status).json({
                 success: result.success,
                 message: result.message,
@@ -44,7 +45,7 @@ class AuthController {
         }
     }
     auth = async (req, res) => {
-        if (req.user) { 
+        if (req.user) {
             return res.json({ isAuthenticated: true, user: req.user });
         }
         return res.status(401).json({ isAuthenticated: false });

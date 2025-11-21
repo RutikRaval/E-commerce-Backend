@@ -19,11 +19,15 @@ const subCategoryRouter = require('./routes/SubCategoryRoutes');
 
 // In your Express app
 const corsOptions = {
-    origin: [ // 👈 Allowlist your frontend URLs
-        'http://localhost:5173',   // Vite dev
-        'http://localhost:3000',   // React dev
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'http://192.168.54.43:5173' // Your IP
     ],
-    credentials: true, // 👈 Required for cookies/sessions
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'], // ← ADD Cookie
+    exposedHeaders: ['Set-Cookie'] // ← ADD this
 };
 
 app.use(cors(corsOptions));

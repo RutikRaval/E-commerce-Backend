@@ -2,7 +2,9 @@ const userModel = require('../model/UserModel')
 const { verifyToken } = require('../utils/jwt')
 
 exports.auth = async (req, res, next) => {
-    const token = req.cookies.token || req?.body?.token || req?.query?.token || req?.headers["authorization"]    
+    const token = req.cookies.token || req?.body?.token || req?.query?.token || req?.headers["authorization"]  
+    console.log("cookies",req.cookies.token);
+      
     if (!token) {
         return res.status(401).json({ message: "Unauthorized token not found" })
     }
