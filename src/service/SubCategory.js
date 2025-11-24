@@ -14,7 +14,7 @@ class SubCategoryService {
                 filter.isActive = active === 'true';
             }
 
-            const allSubCategory = await SubCategorySchema.find(filter).sort({ name: 1 });
+            const allSubCategory = await SubCategorySchema.find(filter).sort({ name: 1 }).populate('categoryId');
             return {
                 success: true,
                 status: 200,
